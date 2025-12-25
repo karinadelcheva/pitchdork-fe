@@ -22,7 +22,7 @@ const AlbumService = supa => {
   return {
     getRandomAlbums: async (count: number = 5): Promise<Album[]> => {
       const { data, status } = await supa
-        .from('random_albums')
+        .from('momchi_review_selection')
         .select('*')
         .limit(count);
       if (status !== 200) {
