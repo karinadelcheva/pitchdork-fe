@@ -1,10 +1,12 @@
 import React, {useState, useCallback, useMemo} from 'react';
-import {ALBUMS, type Album, getRandomAlbums} from '@/data/albums';
+import {ALBUMS} from '@/data/albums';
 import IPodScreen from './IPodScreen';
 import ClickWheel from './ClickWheel';
 import StartScreen from './StartScreen';
 import GameScreen from './GameScreen';
 import ResultsScreen from './ResultsScreen';
+import {MAX_SCORE_PER_ROUND, TOTAL_ROUNDS} from "@/const.ts";
+import {Album, albumService} from "@/data/AlbumService.ts";
 
 type GameState = 'start' | 'playing' | 'result' | 'finished';
 
@@ -13,9 +15,6 @@ interface RoundResult {
   userRating: number;
   score: number;
 }
-
-const TOTAL_ROUNDS = 5;
-const MAX_SCORE_PER_ROUND = 100;
 
 const calculateScore = (userRating: number, actualRating: number): number => {
   const difference = Math.abs(userRating - actualRating);
@@ -33,11 +32,9 @@ const PitchforkGame: React.FC = () => {
   const [results, setResults] = useState<RoundResult[]>([]);
   const [currentRoundScore, setCurrentRoundScore] = useState<number | undefined>();
 
+
   // Shuffle albums at game start
-  const [gameAlbums, setGameAlbums] = useState<Album[]>(() =>
-      getRandomAlbums(5)
-    // [...ALBUMS].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS)
-  );
+  const [gameAlbums, setGameAlbums] = useState<Album[]>(ALBUMS);
 
   const currentAlbum = gameAlbums[currentRound];
 
@@ -119,7 +116,8 @@ const PitchforkGame: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
-      <div className="ipod-body w-full max-w-xs md:max-w-sm p-6 md:p-8 md:m-3 flex flex-col items-center gap-3 md:gap-7">
+      <div
+        className="ipod-body w-full max-w-xs md:max-w-sm p-6 md:p-8 md:m-3 flex flex-col items-center gap-3 md:gap-7">
         {/* Screen */}
         <IPodScreen title={getScreenTitle()} showIcons={showScreenIcons}>
           {gameState === 'start' && (

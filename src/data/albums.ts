@@ -1,19 +1,8 @@
-export interface Album {
-  album: string;
-  artist: string;
-  rating: number;
-  year_released: number;
-  small_text: string;
-  review: string;
-  reviewer: string;
-  genre: string;
-  label: string;
-  reviewed: string;
-  album_art_url: string;
-}
+import {Album, albumService} from "@/data/AlbumService.ts";
+import {TOTAL_ROUNDS} from "@/const.ts";
 
 // Sample albums with their actual Pitchfork ratings
-export const ALBUMS: Album[] = [
+export const LOCAL_ALBUMS: Album[] = [
   {
     "artist": "Radiohead",
     "album": "Kid A Mnesia",
@@ -535,7 +524,5 @@ export const ALBUMS: Album[] = [
     "album_art_url": "https://media.pitchfork.com/photos/5929a1ebb1335d7bf1698393/1:1/w_320"
   }
 ]
-export const getRandomAlbums = (count: number = 5): Album[] => {
-  const shuffled = [...ALBUMS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-};
+
+export const ALBUMS = await albumService.getRandomAlbums(5)
