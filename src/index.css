@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* iPod-inspired color palette */
+    --background: 220 20% 92%;
+    --foreground: 0 0% 10%;
+
+    --card: 45 20% 94%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    /* iPod blue accent */
+    --primary: 210 80% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Click wheel silver */
+    --secondary: 0 0% 78%;
+    --secondary-foreground: 0 0% 25%;
+
+    --muted: 0 0% 88%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 45 15% 88%;
+    --accent-foreground: 0 0% 15%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 82%;
+    --input: 0 0% 85%;
+    --ring: 210 80% 55%;
+
+    --radius: 1rem;
+
+    /* Custom iPod tokens */
+    --ipod-body: 45 20% 94%;
+    --ipod-body-shadow: 45 15% 80%;
+    --ipod-screen-bg: 0 0% 100%;
+    --ipod-screen-border: 0 0% 12%;
+    --ipod-header: 210 75% 55%;
+    --ipod-header-gradient: linear-gradient(180deg, hsl(210 70% 65%) 0%, hsl(210 80% 50%) 100%);
+    --ipod-wheel: 0 0% 78%;
+    --ipod-wheel-inner: 0 0% 88%;
+    --ipod-progress: 210 80% 55%;
+    
+    /* Typography */
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 15% 12%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 15% 15%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 15% 15%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 210 80% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 30%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 220 15% 20%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 220 15% 22%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 220 15% 25%;
+    --input: 220 15% 25%;
+    --ring: 210 80% 60%;
+
+    --ipod-body: 220 15% 18%;
+    --ipod-body-shadow: 220 15% 10%;
+    --ipod-screen-bg: 220 15% 8%;
+    --ipod-screen-border: 0 0% 5%;
+    --ipod-header: 210 70% 45%;
+    --ipod-header-gradient: linear-gradient(180deg, hsl(210 65% 50%) 0%, hsl(210 75% 35%) 100%);
+    --ipod-wheel: 220 10% 30%;
+    --ipod-wheel-inner: 220 10% 40%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .ipod-body {
+    @apply bg-card rounded-[2.5rem] shadow-2xl;
+    background: linear-gradient(145deg, hsl(var(--ipod-body)) 0%, hsl(var(--ipod-body-shadow)) 100%);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .ipod-screen {
+    @apply bg-ipod-screen rounded-lg overflow-hidden;
+    border: 3px solid hsl(var(--ipod-screen-border));
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .ipod-header {
+    background: var(--ipod-header-gradient);
+    @apply text-primary-foreground px-3 py-1.5 flex justify-between items-center text-sm font-medium;
+  }
+
+  .click-wheel {
+    @apply rounded-full relative;
+    background: linear-gradient(180deg, hsl(var(--ipod-wheel)) 0%, hsl(0 0% 72%) 100%);
+    box-shadow: 
+      inset 0 2px 4px rgba(255, 255, 255, 0.3),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+      0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .click-wheel-center {
+    @apply rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-150;
+    background: linear-gradient(180deg, hsl(var(--ipod-wheel-inner)) 0%, hsl(0 0% 82%) 100%);
+    box-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .click-wheel-center:hover {
+    transform: translate(-50%, -50%) scale(0.98);
+    box-shadow: 
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .click-wheel-center:active {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  .progress-dot {
+    @apply w-2.5 h-2.5 rounded-full transition-all duration-300;
+  }
+
+  .progress-dot-active {
+    @apply bg-primary scale-110;
+    box-shadow: 0 0 8px hsl(var(--primary) / 0.5);
+  }
+
+  .progress-dot-inactive {
+    @apply bg-muted;
+  }
+
+  .progress-dot-completed {
+    @apply bg-primary/60;
+  }
+
+  .rating-display {
+    @apply font-bold text-3xl tabular-nums;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .score-reveal {
+    animation: scoreReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes scoreReveal {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer utilities {
+  .bg-ipod-screen {
+    background-color: hsl(var(--ipod-screen-bg));
+  }
+}
