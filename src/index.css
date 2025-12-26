@@ -245,3 +245,12 @@
     background-color: hsl(var(--ipod-screen-bg));
   }
 }
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;          /* Prevent scrolling */
+    overscroll-behavior: none; /* Prevent rubber-band/bounce on mobile */
+}
