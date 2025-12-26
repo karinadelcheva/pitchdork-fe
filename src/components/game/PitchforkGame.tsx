@@ -1,5 +1,4 @@
 import React, {useState, useCallback, useMemo} from 'react';
-import {ALBUMS} from '@/data/albums';
 import IPodScreen from './IPodScreen';
 import ClickWheel from './ClickWheel';
 import StartScreen from './StartScreen';
@@ -24,7 +23,8 @@ const calculateScore = (userRating: number, actualRating: number): number => {
   return Math.round(score);
 };
 
-const PitchforkGame: React.FC = () => {
+
+const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
   const [gameState, setGameState] = useState<GameState>('start');
   const [currentRound, setCurrentRound] = useState(0);
   const [userRating, setUserRating] = useState(5.0);
@@ -34,7 +34,7 @@ const PitchforkGame: React.FC = () => {
 
 
   // Shuffle albums at game start
-  const [gameAlbums, setGameAlbums] = useState<Album[]>(ALBUMS);
+  const [gameAlbums, setGameAlbums] = useState<Album[]>(props.initialAlbums);
 
   const currentAlbum = gameAlbums[currentRound];
 
@@ -47,7 +47,7 @@ const PitchforkGame: React.FC = () => {
 
   const handleStart = useCallback(() => {
     // Reset game
-    setGameAlbums([...ALBUMS].sort(() => Math.random() - 0.5).slice(0, TOTAL_ROUNDS));
+    setGameAlbums(props.initialAlbums);
     setCurrentRound(0);
     setUserRating(5.0);
     setShowResult(false);

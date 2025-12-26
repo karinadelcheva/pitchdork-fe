@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import PitchforkGame from '@/components/game/PitchforkGame';
+import {Album} from "@/data/AlbumService.ts";
 
-const Index = () => {
+const Index = (props: { initialAlbums: Album[] }) => {
   return (
     <>
       <Helmet>
@@ -12,7 +13,7 @@ const Index = () => {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
       </Helmet>
-      <PitchforkGame />
+      <PitchforkGame initialAlbums={props.initialAlbums} />
     </>
   );
 };
