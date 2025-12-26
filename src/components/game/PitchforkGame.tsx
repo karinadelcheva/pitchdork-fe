@@ -154,6 +154,7 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
           gameState={gameState}
           min={0}
           max={10}
+          disabled={showResult}
         />
       </div>
     </div>

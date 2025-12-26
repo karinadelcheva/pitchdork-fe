@@ -114,21 +114,21 @@ const ClickWheel: React.FC<ClickWheelProps> = ({
   return (
     <div
       ref={wheelRef}
-      className={`click-wheel w-48 h-48 md:w-56 md:h-56 select-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab'} ${isDragging ? 'cursor-grabbing' : ''}`}
+      className={`click-wheel w-48 h-48 md:w-56 md:h-56 select-none} ${isDragging ? 'cursor-grabbing' : ''}`}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
     >
       {/* Direction labels */}
-      <span className="absolute top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-secondary-foreground/70 select-none">
+      <span className={`absolute top-3 left-1/2 -translate-x-1/2 text-xs font-semibold text-secondary-foreground/70 select-none  ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab'}`}>
         MENU
       </span>
-      {gameState !== 'playing' && <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-lg text-secondary-foreground/70 select-none">
+      {gameState !== 'playing' && <span className={`absolute bottom-3 left-1/2 -translate-x-1/2 text-lg text-secondary-foreground/70 select-none  ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab'}`}>
         ▶❚❚
       </span>}
-      {gameState !== 'playing' && <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg text-secondary-foreground/70 select-none">
+      {gameState !== 'playing' && <span className={`absolute left-3 top-1/2 -translate-y-1/2 text-lg text-secondary-foreground/70 select-none  ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab'}`}>
         ◀◀
       </span>}
-      {gameState !== 'playing' && <span className="absolute right-3 top-1/2 -translate-y-1/2 text-lg text-secondary-foreground/70 select-none">
+      {gameState !== 'playing' && <span className={`absolute right-3 top-1/2 -translate-y-1/2 text-lg text-secondary-foreground/70 select-none  ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-grab'}`}>
         ▶▶
       </span>}
 
@@ -137,9 +137,8 @@ const ClickWheel: React.FC<ClickWheelProps> = ({
         className="click-wheel-center w-20 h-20 md:w-24 md:h-24 flex items-center justify-center"
         onClick={(e) => {
           e.stopPropagation();
-          if (!disabled) onCenterClick();
+          onCenterClick();
         }}
-        disabled={disabled}
       >
         <span className="text-xs font-semibold text-secondary-foreground/80">
           {centerLabel}
