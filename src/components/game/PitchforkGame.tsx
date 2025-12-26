@@ -45,6 +45,18 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
 
   const maxPossibleScore = TOTAL_ROUNDS * MAX_SCORE_PER_ROUND;
 
+  const handleAgain = useCallback ( async () => {
+    const newAlbums = await albumService.getRandomAlbums(TOTAL_ROUNDS);
+    // Reset game
+    setGameAlbums(newAlbums);
+    setCurrentRound(0);
+    setUserRating(5.0);
+    setShowResult(false);
+    setResults([]);
+    setCurrentRoundScore(undefined);
+    setGameState('playing');
+  }, []);
+
   const handleStart = useCallback(() => {
     // Reset game
     setGameAlbums(props.initialAlbums);
@@ -63,7 +75,7 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
     }
 
     if (gameState === 'finished') {
-      handleStart();
+      handleAgain();
       return;
     }
 
@@ -140,7 +152,7 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
               results={results}
               totalScore={totalScore}
               maxPossibleScore={maxPossibleScore}
-              onPlayAgain={handleStart}
+              onPlayAgain={handleAgain}
             />
           )}
         </IPodScreen>
