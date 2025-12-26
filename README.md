@@ -1,5 +1,6 @@
 # Pitchdork 
 ## What is Pitchdork?
+[Deployed in Vercel here.](https://pitchdork-fe-git-main-karinadelchevas-projects.vercel.app/)
 ![img.png](img.png)
 
 Pitchdork is a music discovery and trivia-style web app centered around Pitchfork album reviews. The data for the reviews comes from a large dataset available on hugging face. This dataset has been hosted on Supabase, to allow easy, plug n play API access.
