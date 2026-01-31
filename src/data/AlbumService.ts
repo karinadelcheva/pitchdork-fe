@@ -22,9 +22,10 @@ const AlbumService = supa => {
   return {
     getRandomAlbums: async (count: number = 5): Promise<Album[]> => {
       const { data, status } = await supa
-        .from('momchi_random_albums')
+        .from('random_albums')
         .select('*')
-        .limit(count);
+        .limit(count)
+        .setHeader('Access-Control-Allow-Origin', '*')
       if (status !== 200) {
         throw new Error('GET RANDOM ALBUMS: Failed to fetch')
       }
