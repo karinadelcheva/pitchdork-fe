@@ -53,6 +53,9 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
         <p className="text-muted-foreground/60 text-xs">
           {album.year_released}
         </p>
+        <p className="text-muted-foreground/80 text-xs">
+          {album.genre}
+        </p>
 
         <div className="mt-2">
           <p className="text-xs text-muted-foreground mb-0.5">Your Rating</p>

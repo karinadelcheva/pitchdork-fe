@@ -3,6 +3,7 @@ import type {Album} from '@/data/albums';
 import AlbumCard from './AlbumCard';
 import RatingSlider from './RatingSlider';
 import ProgressIndicator from './ProgressIndicator';
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 interface GameScreenProps {
   album: Album;
@@ -48,6 +49,24 @@ const GameScreen: React.FC<GameScreenProps> = ({
           </div>
         ) : (
           <div>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <span className={'cursor-help'}>💡</span>
+              </Tooltip.Trigger>
+              <Tooltip.Content
+                side="top"
+                align="center"
+                className="z-50 max-w-md w-72 p-4 rounded-xl shadow-lg backdrop-blur-md bg-white/30 border border-white/20 text-gray-900 dark:text-white text-base whitespace-pre-line"
+                style={{
+                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                  backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.18)',
+                }}
+              >
+                {album.small_text}
+              </Tooltip.Content>
+            </Tooltip.Root>
             <p className="text-center fade-in text-[11px] text-muted-foreground mt-0">
               ↻ Use dial to rate • Press RATE to confirm
             </p>
