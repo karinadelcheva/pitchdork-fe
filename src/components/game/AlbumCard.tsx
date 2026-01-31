@@ -1,5 +1,6 @@
 import React from 'react';
-import type { Album } from '@/data/albums';
+import type {Album} from '@/data/albums';
+import Marquee from "react-fast-marquee";
 
 interface AlbumCardProps {
   album: Album;
@@ -7,23 +8,23 @@ interface AlbumCardProps {
   showResult?: boolean;
 }
 
-const AlbumCard: React.FC<AlbumCardProps> = ({ 
-  album, 
-  userRating,
-  showResult = false 
-}) => {
+const AlbumCard: React.FC<AlbumCardProps> = ({
+                                               album,
+                                               userRating,
+                                               showResult = false
+                                             }) => {
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating / 2);
     const hasHalfStar = (rating % 2) >= 1;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
-    
+
     return (
       <div className="flex gap-0.5 text-sm">
-        {Array.from({ length: fullStars }, (_, i) => (
+        {Array.from({length: fullStars}, (_, i) => (
           <span key={`full-${i}`} className="text-primary">★</span>
         ))}
         {hasHalfStar && <span className="text-primary">✦</span>}
-        {Array.from({ length: emptyStars }, (_, i) => (
+        {Array.from({length: emptyStars}, (_, i) => (
           <span key={`empty-${i}`} className="text-muted-foreground/40">★</span>
         ))}
       </div>
@@ -45,7 +46,21 @@ const AlbumCard: React.FC<AlbumCardProps> = ({
       {/* Album Info */}
       <div className="flex-1 min-w-0">
         <h2 className="font-bold text-foreground text-lg leading-tight truncate">
-          {album.album}
+          <Marquee
+            key={album.album}
+            gradient={album.album.length > 12}
+            speed={30}
+            pauseOnHover={true}
+            pauseOnClick={true}
+            gradientWidth={8}
+            delay={2}
+            play={album.album.length > 12}
+          >
+              <span className='pr-2'>
+                {album.album}
+              </span>
+          </Marquee>
+
         </h2>
         <p className="text-muted-foreground text-sm truncate">
           {album.artist}
