@@ -127,7 +127,8 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
   const showScreenIcons = gameState === 'start' || gameState === 'finished';
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+    <div className="h-screen bg-background flex flex-col items-center justify-center">
+      <img className="h-16 w-28" src='/Logo.svg' alt='/Logo.svg'/>
       <div
         className="ipod-body w-full max-w-xs md:max-w-sm p-6 md:p-8 md:m-3 flex flex-col items-center gap-3 md:gap-7">
         {/* Screen */}
