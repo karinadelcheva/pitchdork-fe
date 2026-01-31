@@ -128,7 +128,6 @@ const PitchforkGame: React.FC = (props: { initialAlbums: Album[] }) => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
-      <img className="h-16 w-28" src='public/Logo.svg' alt='public/Logo.svg'/>
       <div
         className="ipod-body w-full max-w-xs md:max-w-sm p-6 md:p-8 md:m-3 flex flex-col items-center gap-3 md:gap-7">
         {/* Screen */}
