@@ -6,11 +6,13 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import {Album} from "@/data/AlbumService.ts";
+import { Analytics } from "@vercel/analytics/next"
 
 const queryClient = new QueryClient();
 
 const App = (props: { initialAlbums: Album[] }) => (
   <HelmetProvider>
+    <Analytics/>
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Sonner />
