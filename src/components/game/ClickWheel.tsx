@@ -23,84 +23,108 @@ const ClickWheel: React.FC<ClickWheelProps> = ({
 }) => {
   const wheelRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [lastAngle, setLastAngle] = useState<number | null>(null);
+  const lastAngleRef = useRef<number | null>(null);
   const accumulatedRotation = useRef(0);
+  const valueRef = useRef(value);
+
+  // Keep valueRef in sync with the prop
+  useEffect(() => {
+    valueRef.current = value;
+  }, [value]);
 
   const getAngle = useCallback((clientX: number, clientY: number) => {
     if (!wheelRef.current) return 0;
-    
+
     const rect = wheelRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     const deltaX = clientX - centerX;
     const deltaY = clientY - centerY;
-    
+
     return Math.atan2(deltaY, deltaX) * (180 / Math.PI);
   }, []);
 
   const handleMove = useCallback((clientX: number, clientY: number) => {
-    if (!isDragging || disabled) return;
+    if (disabled) return;
 
     const currentAngle = getAngle(clientX, clientY);
-    
-    if (lastAngle !== null) {
-      let delta = currentAngle - lastAngle;
-      
+
+    if (lastAngleRef.current !== null) {
+      let delta = currentAngle - lastAngleRef.current;
+
       // Handle wrap-around
       if (delta > 180) delta -= 360;
       if (delta < -180) delta += 360;
-      
-      accumulatedRotation.current += delta;
-      
-      // Convert rotation to value (360 degrees = full range)
-      const range = max - min;
-      const sensitivity = 3; // degrees per 0.1 unit
-      const valueChange = (delta / sensitivity) * 0.1;
-      
-      const newValue = Math.max(min, Math.min(max, value + valueChange));
-      onChange(Math.round(newValue * 10) / 10);
-    }
-    
-    setLastAngle(currentAngle);
-  }, [isDragging, disabled, getAngle, lastAngle, max, min, onChange, value]);
 
-  const handleStart = useCallback((clientX: number, clientY: number) => {
+      accumulatedRotation.current += delta;
+
+      // Convert rotation to value using sensitivity
+      const sensitivity = 2; // degrees per 0.1 unit
+      const valueChange = (delta / sensitivity) * 0.1;
+
+      const newValue = Math.max(min, Math.min(max, valueRef.current + valueChange));
+      const rounded = Math.round(newValue * 10) / 10;
+      valueRef.current = rounded;
+      onChange(rounded);
+    }
+
+    lastAngleRef.current = currentAngle;
+  }, [disabled, getAngle, max, min, onChange]);
+
+  const handleStart = useCallback((clientX: number, clientY: number, target?: EventTarget | null) => {
     if (disabled) return;
+
+    // Check if the click/touch is on the center button - if so, don't start dragging
+    if (target && wheelRef.current) {
+      const centerButton = wheelRef.current.querySelector('.click-wheel-center');
+      if (centerButton && (centerButton === target || centerButton.contains(target as Node))) {
+        return; // Don't start dragging if clicking the center button
+      }
+    }
+
     setIsDragging(true);
-    setLastAngle(getAngle(clientX, clientY));
+    lastAngleRef.current = getAngle(clientX, clientY);
     accumulatedRotation.current = 0;
   }, [disabled, getAngle]);
 
   const handleEnd = useCallback(() => {
     setIsDragging(false);
-    setLastAngle(null);
+    lastAngleRef.current = null;
   }, []);
 
   // Mouse events
   const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    handleStart(e.clientX, e.clientY);
+    handleStart(e.clientX, e.clientY, e.target);
   };
 
   // Touch events
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // Prevent scrolling and other default touch behaviors
     const touch = e.touches[0];
-    handleStart(touch.clientX, touch.clientY);
+    handleStart(touch.clientX, touch.clientY, e.target);
   };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
     const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // Prevent scrolling during rotation
       const touch = e.touches[0];
-      handleMove(touch.clientX, touch.clientY);
+      if (touch) {
+        handleMove(touch.clientX, touch.clientY);
+      }
+    };
+
+    const handleTouchCancel = () => {
+      handleEnd();
     };
 
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleEnd);
-      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
       window.addEventListener('touchend', handleEnd);
+      window.addEventListener('touchcancel', handleTouchCancel);
     }
 
     return () => {
@@ -108,13 +132,14 @@ const ClickWheel: React.FC<ClickWheelProps> = ({
       window.removeEventListener('mouseup', handleEnd);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleEnd);
+      window.removeEventListener('touchcancel', handleTouchCancel);
     };
   }, [isDragging, handleMove, handleEnd]);
 
   return (
     <div
       ref={wheelRef}
-      className={`click-wheel w-48 h-48 md:w-56 md:h-56 select-none} ${isDragging ? 'cursor-grabbing' : ''}`}
+      className={`click-wheel w-48 h-48 md:w-56 md:h-56 select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
     >
