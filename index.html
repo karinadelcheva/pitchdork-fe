@@ -1,30 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K674XN5ZMR"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-K674XN5ZMR');
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-K674XN5ZMR');
     </script>
+
+    <!-- Add Cookiebot script    -->
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0fb23529-fd6f-40e8-8b72-116606073133"
+            type="text/javascript" async></script>
+
     <!-- TODO: Set the document title to the name of your application -->
     <title>Pitchdork</title>
-    <meta name="description" content="Are you as good at album rating as Pitchfork?" />
-    <meta name="author" content="Pitchdork" />
+    <meta name="description" content="Are you as good at album rating as Pitchfork?"/>
+    <meta name="author" content="Pitchdork"/>
 
     <!-- TODO: Update og:title to match your application name -->
-    <meta property="og:title" content="Pitchdork - The audiophile test" />
-    <meta property="og:description" content="Are you as good at album rating as Pitchfork?" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="" />
-  </head>
+    <meta property="og:title" content="Pitchdork - The audiophile test"/>
+    <meta property="og:description" content="Are you as good at album rating as Pitchfork?"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+</head>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<body>
+<div id="root"></div>
+<script type="module" src="/src/main.tsx"></script>
+</body>
 </html>
